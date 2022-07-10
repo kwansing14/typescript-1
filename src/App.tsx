@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import { TodoListItem } from './components/TodoListItem';
+import { TodoList } from './components/TodoList';
+import { AddTodoForm } from './components/AddTodoForm';
 interface Todo {
   text: string;
   complete: boolean;
@@ -17,11 +18,12 @@ const initialTodos: Todo[] = [
   },
 ];
 
+type AddTodo = (text: string) => void;
+
 function App() {
   const [todos, setTodos] = useState(initialTodos);
-  console.log(todos);
+
   const toggleTodo = (selectedTodo: Todo) => {
-    console.log('selected--', selectedTodo);
     const newTodos = todos.map((todo) => {
       if (todo === selectedTodo) {
         return {
@@ -34,10 +36,15 @@ function App() {
     setTodos(newTodos);
   };
 
+  const addTodo: AddTodo = (text: string) => {
+    const newTodo = { text, complete: false };
+    setTodos([...todos, newTodo]);
+  };
+
   return (
     <div className='App'>
-      <TodoListItem todo={todos[0]} toggleTodo={toggleTodo} />
-      <TodoListItem todo={todos[1]} toggleTodo={toggleTodo} />
+      <TodoList todos={todos} toggleTodo={toggleTodo} />
+      <AddTodoForm addTodo={addTodo} />
     </div>
   );
 }
