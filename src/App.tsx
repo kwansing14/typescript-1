@@ -19,8 +19,9 @@ const initialTodos: Todo[] = [
 
 function App() {
   const [todos, setTodos] = useState(initialTodos);
-
+  console.log(todos);
   const toggleTodo = (selectedTodo: Todo) => {
+    console.log('selected--', selectedTodo);
     const newTodos = todos.map((todo) => {
       if (todo === selectedTodo) {
         return {
